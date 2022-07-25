@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: woodchopper
+Version: 1.0.0
+Summary: A lightweight logging package
+Author-email: AfterNoonPM <h2o.Drop2010+pypi@gmail.com>
+Project-URL: Source, https://github.com/TinkerTown-SEMI/woodchopper
+Project-URL: Bug Tracker, https://github.com/TinkerTown-SEMI/woodchopper/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Woodchopper
+A lightweight logging package

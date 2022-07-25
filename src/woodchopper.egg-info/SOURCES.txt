@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/woodchopper/__init__.py
+src/woodchopper.egg-info/PKG-INFO
+src/woodchopper.egg-info/SOURCES.txt
+src/woodchopper.egg-info/dependency_links.txt
+src/woodchopper.egg-info/requires.txt
+src/woodchopper.egg-info/top_level.txt
