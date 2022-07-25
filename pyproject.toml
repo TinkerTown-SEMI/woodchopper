@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "woodchopper"
+version = "1.0.0"
+authors = [
+  { name="AfterNoonPM", email="h2o.Drop2010+pypi@gmail.com" }
+]
+description = "A lightweight logging package"
+readme = "README.md"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+	"rich"
+]
+[project.urls]
+"Source" = "https://github.com/TinkerTown-SEMI/woodchopper"
+"Bug Tracker" = "https://github.com/TinkerTown-SEMI/woodchopper/issues"
