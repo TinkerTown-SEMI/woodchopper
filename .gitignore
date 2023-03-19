@@ -1,3 +1,7 @@
+##########
+# PYTHON #
+##########
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -6,9 +10,10 @@ __pycache__/
 # C extensions
 *.so
 
-# Installer logs
+# logs
 pip-log.txt
 pip-delete-this-directory.txt
+*.log
 
 # Environments
 .env
@@ -21,91 +26,70 @@ venv.bak/
 
 # Logs
 *.log
-!monty.log
 
-# Backups
+# Backups / Temporary files
 *.bak
+*.old**
+old_**
+*._temp**
+*.tmp**
+
 
 # Folders created when running pip install . or poetry install
 build/
 
+###############
+# OS-SPECIFIC #
+###############
 
-
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux
-
-### Linux ###
+# Linux
 *~
 
-# temporary files which can be created if a process still has a handle open of a deleted file
+# Created when files that are in use are deleted
 .fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-### macOS ###
 # General
 .DS_Store
 .AppleDouble
 .LSOverride
+.directory
+[Dd]esktop.ini
 
-# Icon must end with two \r
+# MacOS "Icon" filename must end with two \r
 Icon
 
 
 # Thumbnails
 ._*
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
+$RECYCLE.BIN/
 .Spotlight-V100
 .TemporaryItems
 .Trashes
+.Trash-*
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-# Directories potentially created on remote AFP share
+# Files and folders potentially generated on file shares
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
 
-### macOS Patch ###
 # iCloud generated files
 *.icloud
-
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
 
 # Dump file
 *.stackdump
 
-# Folder config file
-[Dd]esktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-
 # Windows shortcuts
 *.lnk
-
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux
