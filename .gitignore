@@ -21,8 +21,6 @@ pip-delete-this-directory.txt
 env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
 # Logs
 *.log
