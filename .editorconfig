@@ -17,4 +17,3 @@ end_of_line = crlf
 
 [*.ps1]
 end_of_line = lf
-
