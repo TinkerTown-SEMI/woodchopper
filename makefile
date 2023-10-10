@@ -23,8 +23,8 @@
 
 # Environment variables
 VENV_DIR := .venv
-
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+
 PROJECT_NAME := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 PROJECT_SRC := src/$(PROJECT_NAME)/
 PROJECT_VERSION := $(shell python -c "import tomllib;f=open('pyproject.toml', 'rb'); toml=tomllib.load(f); print(toml['tool']['poetry']['version'])")
@@ -37,8 +37,10 @@ BUILD_ARGS := --outdir=$(PROJECT_OUTDIR)
 
 ifeq ($(OS),Windows_NT)
 	VENV_BIN_DIR := $(VENV_DIR)/Scripts
+	VENV_PYTHON := $(VENV_BIN_DIR)/python.exe
 else
 	VENV_BIN_DIR := $(VENV_DIR)/bin
+	VENV_PYTHON := $(VENV_BIN_DIR)/python3
 endif
 
 # Default target
@@ -85,4 +87,4 @@ lint:
 $(VENV_DIR):
 	poetry config virtualenvs.create false --local
 	poetry run python -m venv ./$(VENV_DIR)
-	poetry env use ./$(VENV_BIN_DIR)/python.exe
+	poetry env use ./$(VENV_BIN_DIR)/python
