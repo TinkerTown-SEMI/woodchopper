@@ -76,7 +76,7 @@ test: tests/
 	poetry run pytest $(PYTEST_ARGS)
 
 publish:
-	poetry run twine publish -r pypi $(PROJECT_OUTDIR)/**
+	poetry run twine upload -r pypi $(PROJECT_OUTDIR)/**
 
 lint:
 # stop the build if there are Python syntax errors or undefined names.
