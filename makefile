@@ -86,5 +86,6 @@ lint:
 
 $(VENV_DIR):
 	poetry config virtualenvs.create false --local
+	poetry config virtualenvs.in-project true --local
 	poetry run python -m venv ./$(VENV_DIR)
 	poetry env use ./$(VENV_BIN_DIR)/python
