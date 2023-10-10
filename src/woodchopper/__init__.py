@@ -9,7 +9,6 @@ from io import TextIOWrapper
 from os.path import exists
 from pathlib import Path
 from typing import Union
-from types import NotImplementedType
 
 from rich import print
 from spacename import Namespace
@@ -188,7 +187,7 @@ class Logger:
 		if issubclass(type(self.file), TextIOWrapper):
 			self.file.close()
 
-	def set_logging_level(self, logging_level: int) -> Union[int, NotImplementedType]:
+	def set_logging_level(self, logging_level: int) -> Union[int, type(NotImplemented)]:
 		"""Set the logging level for the Woodchopper Logger instance.
 
 		Args:
