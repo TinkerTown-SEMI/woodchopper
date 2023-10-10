@@ -46,7 +46,7 @@ endif
 
 # Targets
 venv: $(VENV_DIR)
-all: clean install-dev lint test build clean
+all: clean venv install-dev lint test build clean
 deploy: all publish
 
 ver: pyproject.toml
@@ -83,5 +83,6 @@ lint:
 	poetry run flake8 . --count --statistics --extend-exclude=$(FLAKE8_EXCLUDE) --extend-ignore=W191,E251 --exit-zero --max-complexity=10 --max-line-length=$(MAX_LINE_LENGTH)
 
 $(VENV_DIR):
+	poetry config virtualenvs.create false --local
 	poetry run python -m venv $(VENV_DIR)
 	poetry env use $(VENV_BIN_DIR)/python.exe
