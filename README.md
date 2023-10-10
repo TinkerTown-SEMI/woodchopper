@@ -1,7 +1,24 @@
-# ![logo](assets/icons/axe.png) WoodChopper ![logo](assets/icons/axe.png)
+# ![Woodchopper](https://github.com/TinkerTown-SEMI/woodchopper/raw/main/assets/icons/woodchopper_with_log.png)
 
 *A lightweight logging package*
 
+<style>
+	span.debug, span.info, span.warn, span.error {
+		font-weight: bold;
+	}
+	span.debug {
+		color: orange;
+	}
+	span.info {
+		color: blue;
+	}
+	span.warn {
+		color: yellow;
+	}
+	span.error {
+		color: red;
+	}
+</style>
 ### Table of contents
 [Back to Top](#woodchopper)
 
@@ -9,141 +26,128 @@
 
 [Installation](#installation)
 - [Using `pip`](#using-pip)
-	- [Unix/mac/linux:](#unixmaclinux)
-	- [Windows:](#windows)
+	- [Unix/mac/linux](#unixmaclinux)
+	- [Windows](#windows)
+- [Building from source](#building-from-source)
+	- [Unix/mac/linux](#unixmaclinux-1)
+	- [Windows](#windows-1)
 
 [Usage](#usage)
 - [Creating a log](#creating-a-log)
-- [Logging using the base `log` method](#logging-using-the-base-log-method)
-- [Logging every item in a list or tuple](#Logging-every-item-in-a-list-or-tuple)
-- [Logging verbose information](#Logging-verbose-information)
-- [Logging non-critical errors](#Logging-non-critical-errors)
-- [Logging critical errors](#Logging-critical-errors)
-- [Deleting a log](#Deleting-a-log)
+- [Logging plaintext](#logging-plaintext)
+- [Logging debug information](#logging-debug-information)
+- [Logging information](#logging-information)
+- [Logging warnings](#logging-warnings)
+- [Logging errors](#logging-errors)
 
 [Getting help](#getting-help)
 
 ## Installation
-As of now, you can only use pip to install woodchopper. However, this may change in the near future
 
 ### Using `pip`
 To install this package using pip, simply run the following command:
 
-#### Unix/mac/linux:
+#### Unix/mac/linux
 ```bash
 pip3 install woodchopper
 ```
 
 
-#### Windows:
+#### Windows
 ```cmd
-pip install encryptutils
+pip install woodchopper
 ```
+
+### Building from source
+
+#### Unix/mac/linux
+##### Requirements:
+- Python >=3.8.1
+- Git
+- Poetry >=1.5.1
+
+Run the following in the terminal:
+```bash
+git clone https://github.com/TinkerTown-SEMI/woodchopper.git
+cd woodchopper
+
+make install-dev
+make lint test
+make -j4 all
+```
+
+#### Windows
+##### Requirements:
+- Python >=3.8.1
+- Git
+- Poetry >=1.5.1
+- [w64devkit](https://github.com/skeeto/w64devkit) (GNU binaries for windows, including `make`). When you extract the folder, add the folder to the path.
+
+Run the following in the terminal:
+```cmd
+git clone https://github.com/TinkerTown-SEMI/woodchopper.git
+cd woodchopper
+
+make install-dev
+make lint test
+make -j4 all
+```
+
 
 ## Usage
-
 ### Creating a log
-
-Creating logs is easy. Just import the `Logger` class, make a new instance of it, optionaly passing a filepath for the log(str or Path), and assign the object to a variable, like so: 
-
+To use woodchopper, you first have to create a log.
 ```py
-from woodchopper import Logger
+from woodchopper import Logging_Levels, DateTime_Defaults, Styles, Logger
 from pathlib import Path
 
-monty = Path("monty.log")
-l = Logger(monty)
+log = Logger(
+	Path("./spam.log").resolve(),  # Path to log file
+	show_datetime=DateTime_Defaults.DO_NOT_SHOW,  # Don't show date and time. Other options: DateTime_Defaults.DATE_AND_TIME, DateTime_Defaults.DATE_ONLY, DateTime_Defaults.TIME_ONLY
+	logging_level=Logging_Levels.DEBUG,  # Allow all logging operations. Other options: Logging_Levels.DEFAULT, Logging_Levels.WARNING, Logging_Levels.ERROR, Logging_Levels.SILENT.
+	quiet=True  # Suppress log messages on creation and deletion.
+)
 ```
 
-Output:
-
-![INFO: Created log "<woodchopper.Logger object at 0x0000000000000000>"](assets/screenshots/l.__init__.png)
-
-### Logging using the base `log` method
-
-This works very much like `console.log` in JavaScript
-
+### Logging plaintext
 ```py
-l.log("spam and eggs")
+log.log("Hello, world!")
 ```
+##### Output:
+<pre>Hello, world!</pre>
 
-
-Output:
-
-![spam and eggs](assets/screenshots/l.log.png)
-
-### Logging every item in a list or tuple
-
-There is no equivalent for `log_list` in JavaScript
-
+### Logging debug information
 ```py
-l.log_list(["spam", "eggs", "bacon"])
+log.debug("Ate 1 can of spam. Cans of spam remaining: 25.")
 ```
-Output:
+##### Output:
+<pre><span class="debug">DEBUG: </span>Ate 1 can of spam. Cans of spam remaining: 25.</pre>
 
-![spam. new line. eggs. new line. bacon](assets/screenshots/l.log_list.png)
-
-### Logging verbose information
-Like `console.info` in JavaScript
-
-`loggingVerbose.py`
+### Logging information
 ```py
-l.info("Spam is being served... With eggs, of course! Hold the bacon though.")
+log.info("Sent order for 50 cans of spam.")
 ```
+##### Output:
+<pre><span class="info">INFO: </span>Sent order for 50 cans of spam.</pre>
 
-Output:
-
-![INFO: Spam is being served... With eggs, of course! Hold the bacon though.](assets/screenshots/l.info.png)
-
-### Logging non-critical errors
-JavaScript definition: `console.warn`!
-
-`loggingWarnings.py`
+### Logging warnings
 ```py
-l.warn("We\'re out of bacon!")
+log.warn("Running low on spam: 7 cans left.")
 ```
+##### Output:
+<pre><span class="warn">WARNING: </span>Running low on spam: 7 cans left.</pre>
 
-Output:
-
-![WARNING: We're out of bacon!](assets/screenshots/l.warn.png)
-
-### Logging critical errors
-JS equivalent: `console.error`.
-
+### Logging errors
 ```py
-l.error("OUT OF SPAM! OUT OF SPAM!!!")
+log.error("Houston, we have a problem: cans of spam left: 0.")
 ```
-
-Output:
-
-![ERROR: OUT OF SPAM! OUT OF SPAM!!!](assets/screenshots/l.error.png)
-
-### Deleting a log
-
-```py
-l = None
-```
-
-Output:
-
-![INFO: Deleted log "<woodchopper.Logger object at 0x0000000000000000>"](assets/screenshots/l.__del__.png)
+##### Output:
+<pre><span class="error">ERROR: </span> Houston, we have a problem: cans of spam left: 0.</pre>
 
 ## Getting help
 
-You can get help regarding this package in many ways. If you need help with syntax, your first stop should always be help manuals, whether it's the GitHub wiki tab, man pages (not for packages though:wink:), or python's built-in help function[^1]. For errors, it should be [StackOverflow](https://stackoverflow.com) or the [bug tracker](https://github.com/TinkerTown-SEMI/woodchopper/issues).
+You can get help regarding this package in many ways. If you need help with syntax, your first stop should always be help manuals, so you could use python's [built-in help function](https://docs.python.org/3.11/library/functions.html#help), as we do not yet have full documentation published(sorry). For errors, it should be the [bug tracker](https://github.com/TinkerTown-SEMI/woodchopper/issues), and for more generic python errors, you could go over to [StackOverflow](https://stackoverflow.com).
 
-Happy logging!
+## Happy logging, folks!
 
-![Log](assets/icons/log.png)
-
-[^1]: Using the `help` function for woodchopper:
-	```py
-	from woodchopper import Logger
-	from pathlib import Path
-
-	l = Logger(Path("monty.log"))
-
-	help(Logger)
-	help(l)
-	help(l.log)
-	# And so on and so forth
-	```
+![Log](https://github.com/TinkerTown-SEMI/woodchopper/raw/main/assets/icons/log.png)
