@@ -4,7 +4,6 @@
 
 from woodchopper import Logger, Logging_Levels, DateTime_Defaults, __version__
 from pathlib import Path
-from os.path import exists
 from os import remove
 
 #################
