@@ -3,6 +3,7 @@
 ###########
 
 from woodchopper import Logger, Logging_Levels, DateTime_Defaults, __version__
+from pathlib import Path
 from os.path import exists
 from os import remove
 
@@ -36,9 +37,10 @@ def test_logging_levels():
 
 
 log = None
-logpath = "./logs/spam.log"
+logpath = Path("./logs/spam.log").resolve()
 
-if exists(logpath):
+if logpath.exists():
+	remove(logpath)
 	remove(logpath)
 
 
