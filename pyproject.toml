@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "woodchopper"
-version = "2.0.0"
+version = "2.0.1"
 description = "A lightweight logging package"
 authors = ["AfterNoon PM <h2o.Drop2010+woodchopper@gmail.com>"]
 license = "LGPL-3.0-only"
