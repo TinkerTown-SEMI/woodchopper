@@ -6,7 +6,8 @@
 
 from datetime import datetime
 from io import TextIOWrapper
-from os.path import exists
+from os.path import exists, isdir
+from os import mkdir
 from pathlib import Path
 from typing import Union
 
@@ -148,7 +149,7 @@ class Logger:
 		show_datetime: str = DateTime_Defaults.DO_NOT_SHOW,
 		logging_level: int = Logging_Levels.DEFAULT,
 		quiet: bool = False
-	) -> None:
+	) -> None:  # sourcery skip: assign-if-exp
 		"""Initialize a Woodchopper Logger instance.
 
 		Args:
@@ -169,7 +170,12 @@ class Logger:
 
 		if logpath is not None:
 			logpath = Path(str(logpath)).resolve()
-			self.file = open(logpath, "at") if exists(logpath) else open(logpath, "wt")
+			if not isdir(logpath.parent):
+				mkdir(logpath.parent)
+			if exists(logpath):
+				self.file = open(logpath, "at")
+			else:
+				self.file = open(logpath, "wt")
 		else:
 			self.file = None
 

@@ -3,6 +3,8 @@
 ###########
 
 from woodchopper import Logger, Logging_Levels, DateTime_Defaults, __version__
+from os.path import exists
+from os import remove
 
 #################
 # GENERAL TESTS #
@@ -34,12 +36,22 @@ def test_logging_levels():
 
 
 log = None
+logpath = "./logs/spam.log"
+
+if exists(logpath):
+	remove(logpath)
 
 
 def test_init():
 	global log
 
-	log = Logger("./spam.log", logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+
+
+def test_init_already_exist():
+	global log
+
+	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
 
 
 def test_level():
