@@ -4,7 +4,7 @@
 
 from woodchopper import Logger, Logging_Levels, DateTime_Defaults, __version__
 from pathlib import Path
-from os import remove
+from os import remove, rmdir
 
 #################
 # GENERAL TESTS #
@@ -12,7 +12,7 @@ from os import remove
 
 
 def test_version():
-	assert __version__ == "2.0.0"
+	assert __version__ == "2.0.2"
 
 
 def test_datetimes():
@@ -40,17 +40,20 @@ logpath = Path("./logs/spam.log").resolve()
 
 if logpath.exists():
 	remove(logpath)
-	remove(logpath)
+	rmdir(logpath.parent)
 
 
 def test_init():
-	global log
+	# global log
+	pass
 
-	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+	# log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
 
 
 def test_init_already_exist():
 	global log
+
+	log = None
 
 	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
 

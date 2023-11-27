@@ -6,8 +6,8 @@
 
 from datetime import datetime
 from io import TextIOWrapper
-from os.path import exists, isdir
-from os import mkdir
+from os.path import exists, isdir, isfile
+from os import mkdir, PathLike, fsync
 from pathlib import Path
 from typing import Union
 
@@ -19,7 +19,7 @@ from spacename import Namespace
 # SETUP #
 #########
 
-__version__ = "2.0.0"
+__version__ = "2.0.2"
 
 # Logging levels
 
@@ -145,7 +145,7 @@ class Logger:
 	# Instance methods
 	def __init__(
 		self,
-		logpath: Union[str, Path] = None,
+		logpath: PathLike = None,
 		show_datetime: str = DateTime_Defaults.DO_NOT_SHOW,
 		logging_level: int = Logging_Levels.DEFAULT,
 		quiet: bool = False
@@ -168,14 +168,25 @@ class Logger:
 			)
 		"""
 
-		if logpath is not None:
+		if isinstance(logpath, PathLike):
 			logpath = Path(str(logpath)).resolve()
-			if not isdir(logpath.parent):
+			if not isdir(logpath.parent) and exists(logpath.parent):
+				raise NotADirectoryError()
+			elif not exists(logpath.parent):
 				mkdir(logpath.parent)
-			if exists(logpath):
-				self.file = open(logpath, "at")
+
+			if not exists(logpath):
+				mode = "wt"
+			elif isfile(logpath):
+				mode = "at"
 			else:
-				self.file = open(logpath, "wt")
+				raise IsADirectoryError()
+			print(f"isinstance(logpath, PathLike): {isinstance(logpath, PathLike)}\n\
+not isdir(logpath.parent) and exists(logpath.parent){not isdir(logpath.parent) and exists(logpath.parent)}\n\
+not exists(logpath.parent): {not exists(logpath.parent)}\nnot exists(logpath): {not exists(logpath)}\n\
+isfile(logpath): {isfile(logpath)}")
+			print(mode)
+			self.file = open(logpath, mode)
 		else:
 			self.file = None
 
@@ -228,7 +239,9 @@ class Logger:
 				self.file.write(prefix + date_prefix + msg + "\n")
 			print(f"{prefix_style}{prefix}[/]{date_prefix}{text_style}{msg}[/]")
 		if isinstance(self.file, TextIOWrapper):
-			self.file.write("\n")
+			# self.file.write("\n")
+			self.file.flush()
+			fsync(self.file.fileno())
 
 	def debug(self, *msgs, prefix="DEBUG: ", show_datetime=show_datetime):
 		"""Log debug information.
