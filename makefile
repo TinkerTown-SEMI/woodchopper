@@ -18,16 +18,26 @@
 #	           Install the project dependencies only
 #	build      Build the project
 #	test       Run the tests
-#	deploy     Deploy the project
+#	publish    Publish the project
+#	deploy     Deploy the project (all publish)
 #	lint       Lint the project
 
 # Environment variables
 VENV_DIR := .venv
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+PYTHON_VERSION := $(shell python -c "import platform; print(platform.python_version())")
+PYTHON_MINOR := $(shell python -c "import platform; print(platform.python_version_tuple()[1])")
+
+ifeq ($(shell test $(PYTHON_MINOR) -gt 10; echo $$?),0)
+	TOMLLIB := tomllib
+else
+	TOMLLIB := tomli
+endif
+
 
 PROJECT_NAME := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 PROJECT_SRC := src/$(PROJECT_NAME)/
-PROJECT_VERSION := $(shell python -c "import tomllib;f=open('pyproject.toml', 'rb'); toml=tomllib.load(f); print(toml['tool']['poetry']['version'])")
+PROJECT_VERSION := $(shell python -c "import $(TOMLLIB);f=open('pyproject.toml', 'rb'); toml=tomllib.load(f); print(toml['tool']['poetry']['version'])")
 PROJECT_OUTDIR := "./dist/v$(PROJECT_VERSION)"
 
 PYTEST_ARGS := -v
@@ -52,7 +62,7 @@ all: clean venv install-dev lint test build clean
 deploy: all publish
 
 ver: pyproject.toml
-	echo "$(PROJECT_NAME) v$(PROJECT_VERSION)"
+	echo "$(PROJECT_NAME) v$(PROJECT_VERSION) on python v$(PYTHON_VERSION)"
 
 clean:
 	rm './poetry.lock'
