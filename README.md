@@ -2,23 +2,13 @@
 
 *A lightweight logging package*
 
-<style>
-	span.debug, span.info, span.warn, span.error {
-		font-weight: bold;
-	}
-	span.debug {
-		color: orange;
-	}
-	span.info {
-		color: blue;
-	}
-	span.warn {
-		color: yellow;
-	}
-	span.error {
-		color: red;
-	}
-</style>
+[![build](https://img.shields.io/github/actions/workflow/status/TinkerTown-SEMI/woodchopper/python-package.yml?style=for-the-badge)](https://github.com/TinkerTown-SEMI/woodchopper/actions/workflows/python-package.yml)
+[![PyPI - Version](https://img.shields.io/pypi/v/woodchopper?style=for-the-badge&logo=pypi)](https://pypi.org/project/woodchopper)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/woodchopper?style=for-the-badge)](https://pypi.org/project/woodchopper)
+[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json&style=for-the-badge)](https://python-poetry.org/)
+[![GitHub License](https://img.shields.io/github/license/TinkerTown-SEMI/woodchopper?style=for-the-badge)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
+
+
 ### Table of contents
 [Back to Top](#woodchopper)
 
@@ -120,29 +110,29 @@ log.log("Hello, world!")
 ```py
 log.debug("Ate 1 can of spam. Cans of spam remaining: 25.")
 ```
-##### Output:
-<pre><span class="debug">DEBUG: </span>Ate 1 can of spam. Cans of spam remaining: 25.</pre>
+##### Output[^1]:
+<pre><span style="color: orange; font-weight: bold;">DEBUG: </span>Ate 1 can of spam. Cans of spam remaining: 25.</pre>
 
 ### Logging information
 ```py
 log.info("Sent order for 50 cans of spam.")
 ```
-##### Output:
-<pre><span class="info">INFO: </span>Sent order for 50 cans of spam.</pre>
+##### Output[^1]:
+<pre><span style="color: blue; font-weight: bold;">INFO: </span>Sent order for 50 cans of spam.</pre>
 
 ### Logging warnings
 ```py
 log.warn("Running low on spam: 7 cans left.")
 ```
-##### Output:
-<pre><span class="warn">WARNING: </span>Running low on spam: 7 cans left.</pre>
+##### Output[^1]:
+<pre><span style="color: yellow; font-weight: bold;">WARNING: </span>Running low on spam: 7 cans left.</pre>
 
 ### Logging errors
 ```py
 log.error("Houston, we have a problem: cans of spam left: 0.")
 ```
-##### Output:
-<pre><span class="error">ERROR: </span> Houston, we have a problem: cans of spam left: 0.</pre>
+##### Output[^1]:
+<pre><span style="color: red; font-weight: bold;">ERROR: </span> Houston, we have a problem: cans of spam left: 0.</pre>
 
 ## Getting help
 
@@ -151,3 +141,4 @@ You can get help regarding this package in many ways. If you need help with synt
 ## Happy logging, folks!
 
 ![Log](https://github.com/TinkerTown-SEMI/woodchopper/raw/main/assets/icons/log.png)
+[^1]: Sorry, colored/styled text isn't available in github markdown.
