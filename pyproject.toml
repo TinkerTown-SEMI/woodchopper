@@ -15,7 +15,7 @@ spacename = "^1.0.1"
 pytest = "^7.2.2"
 build = ">=0.10,<1.1"
 twine = "^4.0.2"
-wheel = ">=0.40,<0.42"
+wheel = ">=0.40,<0.43"
 flake8 = "^6.0.0"
 tomli = {version=">=2.0.1", markers="python_version < '3.11'"}
 
