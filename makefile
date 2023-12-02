@@ -61,7 +61,7 @@ endif
 # Targets
 venv: $(VENV_DIR)
 all: clean venv install-dev lint test clean
-deploy: all publish
+deploy: all build publish
 
 ver: pyproject.toml
 	echo "$(PROJECT_NAME) v$(PROJECT_VERSION) on python v$(PYTHON_VERSION)"
