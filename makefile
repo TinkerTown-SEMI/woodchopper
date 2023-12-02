@@ -9,7 +9,9 @@
 #	all        Build the project
 #	ver        Print project version and exit
 #	clean      Clean the project
-#	install    Install the project
+#	install    Install the project with default config
+# 	install-prod
+# 	           Install the project for production
 #	install-dev
 #	           Install the project for development
 #	install-root
@@ -68,6 +70,9 @@ clean:
 	rm './poetry.lock'
 
 install: pyproject.toml $(VENV_DIR)/
+	poetry install
+
+install-prod: pyproject.toml $(VENV_DIR)/
 	poetry install --without=dev
 
 install-dev: pyproject.toml $(VENV_DIR)/
@@ -95,7 +100,5 @@ lint:
 	poetry run flake8 . --count --statistics --extend-exclude=$(FLAKE8_EXCLUDE) --extend-ignore=W191,E251 --exit-zero --max-complexity=10 --max-line-length=$(MAX_LINE_LENGTH)
 
 $(VENV_DIR):
-	poetry config virtualenvs.create false --local
-	poetry config virtualenvs.in-project true --local
 	poetry run python -m venv ./$(VENV_DIR)
-	poetry env use ./$(VENV_BIN_DIR)/python
+	poetry env use $(VENV_PYTHON)
