@@ -60,7 +60,7 @@ endif
 
 # Targets
 venv: $(VENV_DIR)
-all: clean venv install-dev lint test build clean
+all: clean venv install-dev lint test clean
 deploy: all publish
 
 ver: pyproject.toml
