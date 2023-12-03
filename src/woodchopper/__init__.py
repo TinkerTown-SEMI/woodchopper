@@ -181,10 +181,7 @@ class Logger:
 				mode = "at"
 			else:
 				raise IsADirectoryError()
-			print(f"isinstance(logpath, PathLike): {isinstance(logpath, PathLike)}\n\
-not isdir(logpath.parent) and exists(logpath.parent){not isdir(logpath.parent) and exists(logpath.parent)}\n\
-not exists(logpath.parent): {not exists(logpath.parent)}\nnot exists(logpath): {not exists(logpath)}\n\
-isfile(logpath): {isfile(logpath)}")
+
 			print(mode)
 			self.file = open(logpath, mode)
 		else:
