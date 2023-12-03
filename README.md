@@ -62,8 +62,8 @@ git clone https://github.com/TinkerTown-SEMI/woodchopper.git
 cd woodchopper
 
 make install-dev
-make lint test
 make -j4 all
+make build
 ```
 
 #### Windows
@@ -79,8 +79,8 @@ git clone https://github.com/TinkerTown-SEMI/woodchopper.git
 cd woodchopper
 
 make install-dev
-make lint test
 make -j4 all
+make build
 ```
 
 
