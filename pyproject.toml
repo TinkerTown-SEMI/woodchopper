@@ -18,6 +18,7 @@ twine = ">=4.0.2,<6.0.0"
 wheel = ">=0.40,<0.44"
 flake8 = ">=6,<8"
 tomli = {version=">=2.0.1", markers="python_version < '3.11'"}
+docutils = "!=0.21"
 
 [build-system]
 requires = ["poetry-core"]
