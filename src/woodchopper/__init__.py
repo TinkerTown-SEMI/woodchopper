@@ -6,9 +6,9 @@
 
 from datetime import datetime
 from io import TextIOWrapper
-from os.path import exists, isdir, isfile
-from os import mkdir, PathLike, fsync
+from os import PathLike, fsync
 from pathlib import Path
+from types import NotImplementedType
 from typing import Union
 
 from rich import print
@@ -168,21 +168,19 @@ class Logger:
 			)
 		"""
 
-		if isinstance(logpath, PathLike):
+		if logpath:
 			logpath = Path(str(logpath)).resolve()
-			if not isdir(logpath.parent) and exists(logpath.parent):
-				raise NotADirectoryError()
-			elif not exists(logpath.parent):
-				mkdir(logpath.parent)
+			parent_dir = logpath.parent
 
-			if not exists(logpath):
+			if not logpath.exists():
 				mode = "wt"
-			elif isfile(logpath):
+				if not parent_dir.exists():
+					parent_dir.mkdir(parents=True)
+			elif logpath.is_file():
 				mode = "at"
 			else:
-				raise IsADirectoryError()
+				raise IsADirectoryError(f"The path you provided for the logfile (\"{logpath}\") is a directory.")
 
-			print(mode)
 			self.file = open(logpath, mode)
 		else:
 			self.file = None
@@ -193,7 +191,9 @@ class Logger:
 		if not quiet:
 			self.info(f"Created log \"{self}\"", show_datetime=show_datetime)
 
-	def __del__(self) -> None:
+	def __del__(
+		self
+	) -> None:
 		"""Perform cleanup operations when the Woodchopper Logger instance is deleted.
 		"""
 		if not self.quiet_on_del:
@@ -201,7 +201,10 @@ class Logger:
 		if issubclass(type(self.file), TextIOWrapper):
 			self.file.close()
 
-	def set_logging_level(self, logging_level: int) -> Union[int, type(NotImplemented)]:
+	def set_logging_level(
+		self,
+		logging_level: int
+	) -> Union[int, NotImplementedType]:
 		"""Set the logging level for the Woodchopper Logger instance.
 
 		Args:
@@ -210,14 +213,21 @@ class Logger:
 		Returns:
 			int | NotImplemented: The logging level that was set, or NotImplemented if the provided logging level is not an integer.
 		"""
-		if isinstance(logging_level, int):
+		if isinstance(logging_level, int) and logging_level >= 0:
 			self.logging_level = logging_level
 		else:
 			logging_level = NotImplemented
 
 		return logging_level
 
-	def log(self, *msgs, prefix_style=Styles.default, text_style=Styles.bold, prefix="", show_datetime=show_datetime):
+	def log(
+		self,
+		*msgs,
+		prefix_style=Styles.default,
+		text_style=Styles.bold,
+		prefix="",
+		show_datetime=None
+	) -> None:
 		"""Log message(s) to stdout using rich.print()
 
 		Args:
@@ -227,9 +237,8 @@ class Logger:
 			show_datetime (str, optional): How to log date and time. Options can be found in woodchopper.DateTime_Options. Defaults to self.show_datetime.
 		""" # noqa
 
-		date_prefix = \
-			f"{datetime.now().strftime(show_datetime)} : " if show_datetime else \
-			f"{datetime.now().strftime(self.show_datetime)} : " if self.show_datetime else ""
+		show_datetime = show_datetime or self.show_datetime
+		date_prefix = f"{datetime.now().strftime(show_datetime)} : " if show_datetime else ""
 
 		for msg in msgs:
 			if isinstance(self.file, TextIOWrapper):
@@ -240,7 +249,12 @@ class Logger:
 			self.file.flush()
 			fsync(self.file.fileno())
 
-	def debug(self, *msgs, prefix="DEBUG: ", show_datetime=show_datetime):
+	def debug(
+		self,
+		*msgs,
+		prefix="DEBUG: ",
+		show_datetime=None
+	):
 		"""Log debug information.
 
 		Args:
@@ -252,7 +266,12 @@ class Logger:
 		if self.logging_level >= Logging_Levels.DEBUG:
 			self.log(*msgs, prefix_style=Styles.debug, prefix=prefix, show_datetime=show_datetime)
 
-	def info(self, *msgs, prefix="INFO: ", show_datetime=show_datetime):
+	def info(
+		self,
+		*msgs,
+		prefix="INFO: ",
+		show_datetime=None
+	):
 		"""Log information.
 
 		Args:
@@ -264,7 +283,12 @@ class Logger:
 		if self.logging_level >= Logging_Levels.DEFAULT:
 			self.log(*msgs, prefix_style=Styles.info, prefix=prefix, show_datetime=show_datetime)
 
-	def warn(self, *msgs, prefix="WARNING: ", show_datetime=show_datetime):
+	def warn(
+		self,
+		*msgs,
+		prefix="WARNING: ",
+		show_datetime=None
+	):
 		"""Log warnings or non-critical errors.
 
 		Args:
@@ -276,7 +300,12 @@ class Logger:
 		if self.logging_level >= Logging_Levels.WARNING:
 			self.log(*msgs, prefix_style=Styles.warn, prefix=prefix, show_datetime=show_datetime)
 
-	def error(self, *msgs, prefix="ERROR: ", show_datetime=show_datetime):
+	def error(
+		self,
+		*msgs,
+		prefix="ERROR: ",
+		show_datetime=None
+	):
 		"""Log critical errors.
 
 		Args:
