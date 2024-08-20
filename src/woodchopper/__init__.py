@@ -136,13 +136,6 @@ class Logger:
 			Log critical errors.
 	"""
 
-	# Instance variables
-	logging_level = Logging_Levels.DEFAULT
-	show_datetime = DateTime_Defaults.DO_NOT_SHOW
-	file = None
-	quiet_on_del = False
-
-	# Instance methods
 	def __init__(
 		self,
 		logpath: PathLike = None,
