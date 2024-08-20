@@ -8,8 +8,7 @@ from datetime import datetime
 from io import TextIOWrapper
 from os import PathLike, fsync
 from pathlib import Path
-from types import NotImplementedType
-from typing import Union
+from typing import Any
 
 from rich import print
 from spacename import Namespace
@@ -179,7 +178,7 @@ class Logger:
 			self.file = None
 
 		self.show_datetime = show_datetime
-		self.set_logging_level(logging_level)
+		self.logging_level = logging_level
 		self.quiet_on_del = quiet
 		if not quiet:
 			self.info(f"Created log \"{self}\"", show_datetime=show_datetime)
@@ -194,24 +193,24 @@ class Logger:
 		if issubclass(type(self.file), TextIOWrapper):
 			self.file.close()
 
-	def set_logging_level(
-		self,
-		logging_level: int
-	) -> Union[int, NotImplementedType]:
-		"""Set the logging level for the Woodchopper Logger instance.
+	@property
+	def logging_level(self) -> int:
+		return self._logging_level
 
-		Args:
-			logging_level (int): The logging level to set.
+	@logging_level.setter
+	def logging_level(self, value: int | Any) -> None:
 
-		Returns:
-			int | NotImplemented: The logging level that was set, or NotImplemented if the provided logging level is not an integer.
-		"""
-		if isinstance(logging_level, int) and logging_level >= 0:
-			self.logging_level = logging_level
-		else:
-			logging_level = NotImplemented
+		try:
+			value = int(value)
+		except ValueError:
+			return
 
-		return logging_level
+		if value < Logging_Levels.SILENT:
+			value = Logging_Levels.SILENT
+		elif value > Logging_Levels.DEBUG:
+			value = Logging_Levels.DEBUG
+
+		self._logging_level = value
 
 	def log(
 		self,

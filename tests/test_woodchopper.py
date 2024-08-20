@@ -44,10 +44,10 @@ if logpath.exists():
 
 
 def test_init():
-	# global log
-	pass
+	global log
+	# pass
 
-	# log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
 
 
 def test_init_already_exist():
@@ -59,13 +59,8 @@ def test_init_already_exist():
 
 
 def test_level():
-	level = log.set_logging_level(Logging_Levels.DEBUG)
-	assert log.logging_level == Logging_Levels.DEBUG and level == Logging_Levels.DEBUG
-
-
-def test_level_not_int_is_not_implemented():
-	level = log.set_logging_level("Hello, world!")
-	assert level == NotImplemented
+	log.logging_level = Logging_Levels.DEBUG
+	assert log.logging_level == Logging_Levels.DEBUG
 
 
 def test_log():
