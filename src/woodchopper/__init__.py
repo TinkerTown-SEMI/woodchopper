@@ -198,7 +198,7 @@ class Logger:
 		return self._logging_level
 
 	@logging_level.setter
-	def logging_level(self, value: int | Any) -> None:
+	def logging_level(self, value: Any) -> None:
 
 		try:
 			value = int(value)
