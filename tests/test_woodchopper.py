@@ -47,7 +47,7 @@ def test_init():
 	global log
 	# pass
 
-	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW)
 
 
 def test_init_already_exist():
@@ -55,7 +55,7 @@ def test_init_already_exist():
 
 	log = None
 
-	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW, quiet=True)
+	log = Logger(logpath=logpath, logging_level=Logging_Levels.DEFAULT, show_datetime=DateTime_Defaults.DO_NOT_SHOW)
 
 
 def test_level():
@@ -81,13 +81,3 @@ def test_warn():
 
 def test_error():
 	log.error("Houston, we have a problem: cans of spam left: 0.")
-
-
-def test_del():
-	global log
-
-	log.__del__()
-	try:
-		assert log.file.closed
-	finally:
-		del log

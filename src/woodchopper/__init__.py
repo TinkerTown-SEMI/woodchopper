@@ -133,8 +133,6 @@ class Logger:
 	Methods:
 		__init__(self, logpath=None, show_datetime=DateTime_Defaults.DO_NOT_SHOW, logging_level=Logging_Levels.DEFAULT, quiet=False):
 			Initialize a Woodchopper Logger instance.
-		__del__(self):
-			Perform cleanup operations when the Woodchopper Logger instance is deleted.
 		set_logging_level(self, logging_level):
 			Set the logging level for the Woodchopper Logger instance.
 		log(self, *msgs, prefix_style=Styles.default, text_style=Styles.bold, prefix="", show_datetime=show_datetime):
@@ -153,8 +151,7 @@ class Logger:
 		self,
 		logpath: PathLike = None,
 		show_datetime: str = DateTime_Defaults.DO_NOT_SHOW,
-		logging_level: int = Logging_Levels.DEFAULT,
-		quiet: bool = False
+		logging_level: int = Logging_Levels.DEFAULT
 	) -> None:  # sourcery skip: assign-if-exp
 		"""Initialize a Woodchopper Logger instance.
 
@@ -192,18 +189,8 @@ class Logger:
 
 		self.show_datetime = show_datetime
 		self.logging_level = logging_level
-		self.quiet_on_del = quiet
-		if not quiet:
-			self.info(f"Created log \"{self}\"", show_datetime=show_datetime)
 
-	def __del__(
-		self
-	) -> None:
-		"""Perform cleanup operations when the Woodchopper Logger instance is deleted."""  # noqa
-		if not self.quiet_on_del:
-			self.info(f"Deleted log \"{self}\".", show_datetime=self.show_datetime)
-		if issubclass(type(self.file), TextIOWrapper):
-			self.file.close()
+		self.debug(f"Created log \"{self}\"", show_datetime=show_datetime)
 
 	@property
 	def logging_level(self) -> int:
