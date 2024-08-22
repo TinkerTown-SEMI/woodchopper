@@ -12,7 +12,7 @@ from os import remove, rmdir
 
 
 def test_version():
-	assert __version__ == "2.0.3"
+	assert __version__ == "2.0.4"
 
 
 def test_datetimes():

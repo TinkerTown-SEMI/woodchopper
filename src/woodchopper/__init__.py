@@ -11,7 +11,7 @@ Key Features:
 - Integration with the rich library for styled console output.
 - Namespace definitions for logging levels, datetime formats, and styles to ensure consistency and ease of use.
 
-Version: 2.0.3
+Version: 2.0.4
 """  # noqa
 
 ###########
@@ -32,7 +32,7 @@ from spacename import Namespace
 # SETUP #
 #########
 
-__version__ = "2.0.3"
+__version__ = "2.0.4"
 
 # Logging levels
 
