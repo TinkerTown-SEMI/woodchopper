@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
-rich = "^13.3.2"
+rich = "^14.0.0"
 spacename = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
